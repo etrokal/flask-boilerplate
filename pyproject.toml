@@ -1,0 +1,22 @@
+[project]
+name = "app"
+version = "1.0.0"
+description = "Boilerplate flask app"
+dependencies = [
+    "flask",
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = "."
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+
+[tool.prettier]
+plugins = ["prettier-plugin-jinja"]
