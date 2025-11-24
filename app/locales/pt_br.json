@@ -1,0 +1,7 @@
+{
+  "messages": {
+    "hello_world": "Olá, mundo!"
+  },
+  "currency": "R$",
+  "date_format": "$d/%M/%Y"
+}
