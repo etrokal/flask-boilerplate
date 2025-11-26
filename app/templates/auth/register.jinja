@@ -1,3 +1,23 @@
-{% extends "base.jinja" %}
+{% extends "layouts/base.jinja" %}
+{% from "form/_input.jinja" import form_input, form_input_confirmation %}
 
-{%%}
+{% block content %}
+  <main class="responsive padding">
+    <h4>{{ __('Register user') }}</h4>
+    <form action="" method="post">
+      {{ form.csrf_token }}
+      {{ form_input(form.username) }}
+      {{ form_input(form.email) }}
+      {{ form_input_confirmation(form.password, form.password_confirmation) }}
+
+      <input
+        type="submit"
+        value="{{ __('Register') }}"
+        class="primary button"
+      />
+      <a href="{{ url_for('home.index') }}" class="button tertiary"
+        >{{ __('Back') }}</a
+      >
+    </form>
+  </main>
+{% endblock content %}

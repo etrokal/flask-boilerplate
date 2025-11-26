@@ -5,6 +5,8 @@ from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
+from decouple import config
+
 from app import language
 from app.language.language_manager import Language
 from .config import Config
@@ -14,6 +16,7 @@ db = SQLAlchemy()
 migrate = Migrate()
 
 # TODO: Add security to the app
+# TODO: Create command to generate secret key
 
 
 def create_app(test_config:  Mapping[str, Any] | None = None) -> Flask:
@@ -41,17 +44,15 @@ def create_app(test_config:  Mapping[str, Any] | None = None) -> Flask:
 
     # Initialize extensions with the app
     db.init_app(app)
-    migrate.init_app(app, db)          # This is the key line for Flask-Migrate
+    migrate.init_app(app, db)       # This is the key line for Flask-Migrate
 
-    # Initialize language
-    if 'language' not in app.extensions:
-        app.extensions['language'] = Language()
+    # Register extensions
+    app.extensions['language'] = Language(
+        app.config["DEFAULT_LOCALE"], app.config["LOCALE"])
 
-    # import extensions
-    from . import extensions
+    register_context_processors(app)
 
     # a simple page that says hello
-
     @app.route('/hello')
     def hello():
         return 'Hello, World!'
@@ -60,6 +61,26 @@ def create_app(test_config:  Mapping[str, Any] | None = None) -> Flask:
     # app.register_blueprint(blog.bp)
     # app.add_url_rule('/', endpoint='index')
 
-    from . import models
+    register_routes(app)
+
+    # from . import models
 
     return app
+
+
+def register_context_processors(app: Flask):
+    @app.context_processor
+    def inject_translation_helper():
+        from app.extensions import __
+        return dict(__=__)
+
+
+def register_routes(app: Flask):
+    # auth
+    from app.blueprints import auth
+    app.register_blueprint(auth.bp)
+
+    # home
+    from app.blueprints import home
+    app.register_blueprint(home.bp, )
+    app.add_url_rule('/', endpoint='home.index')

@@ -1,4 +1,4 @@
-body {
+/* :root {
   --primary: #0061a4;
   --on-primary: #ffffff;
   --primary-container: #d1e4ff;
@@ -35,4 +35,96 @@ body {
   --surface-container: #eeedf1;
   --surface-container-high: #e8e8eb;
   --surface-container-highest: #e2e2e6;
+} */
+
+/*
+ * This file contains the color theme for Beer CSS.
+ * All hex codes have been converted to comma-separated RGB values (R, G, B)
+ * as required by the Beer CSS framework.
+ *
+ * Ensure this file is loaded AFTER the main beer.min.css file in your HTML.
+ */
+
+:root {
+  /* Primary: #0061a4 -> 0, 97, 164 */
+  --primary: 0, 97, 164;
+  /* On-Primary: #ffffff -> 255, 255, 255 */
+  --on-primary: 255, 255, 255;
+  /* Primary-Container: #d1e4ff -> 209, 228, 255 */
+  --primary-container: 209, 228, 255;
+  /* On-Primary-Container: #001d36 -> 0, 29, 54 */
+  --on-primary-container: 0, 29, 54;
+
+  /* Secondary: #535f70 -> 83, 95, 112 */
+  --secondary: 83, 95, 112;
+  /* On-Secondary: #ffffff -> 255, 255, 255 */
+  --on-secondary: 255, 255, 255;
+  /* Secondary-Container: #d7e3f7 -> 215, 227, 247 */
+  --secondary-container: 215, 227, 247;
+  /* On-Secondary-Container: #101c2b -> 16, 28, 43 */
+  --on-secondary-container: 16, 28, 43;
+
+  /* Tertiary: #6b5778 -> 107, 87, 120 */
+  --tertiary: 107, 87, 120;
+  /* On-Tertiary: #ffffff -> 255, 255, 255 */
+  --on-tertiary: 255, 255, 255;
+  /* Tertiary-Container: #f2daff -> 242, 218, 255 */
+  --tertiary-container: 242, 218, 255;
+  /* On-Tertiary-Container: #251431 -> 37, 20, 49 */
+  --on-tertiary-container: 37, 20, 49;
+
+  /* Error: #ba1a1a -> 186, 26, 26 */
+  --error: 186, 26, 26;
+  /* On-Error: #ffffff -> 255, 255, 255 */
+  --on-error: 255, 255, 255;
+  /* Error-Container: #ffdad6 -> 255, 218, 214 */
+  --error-container: 255, 218, 214;
+  /* On-Error-Container: #410002 -> 65, 0, 2 */
+  --on-error-container: 65, 0, 2;
+
+  /* Background: #fdfcff -> 253, 252, 255 */
+  --background: 253, 252, 255;
+  /* On-Background: #1a1c1e -> 26, 28, 30 */
+  --on-background: 26, 28, 30;
+
+  /* Surface: #faf9fc -> 250, 249, 252 */
+  --surface: 250, 249, 252;
+  /* On-Surface: #1a1c1e -> 26, 28, 30 */
+  --on-surface: 26, 28, 30;
+  /* Surface-Variant: #dfe2eb -> 223, 226, 235 */
+  --surface-variant: 223, 226, 235;
+  /* On-Surface-Variant: #43474e -> 67, 71, 78 */
+  --on-surface-variant: 67, 71, 78;
+
+  /* Outline: #73777f -> 115, 119, 127 */
+  --outline: 115, 119, 127;
+  /* Outline-Variant: #c3c7cf -> 195, 199, 207 */
+  --outline-variant: 195, 199, 207;
+
+  /* Shadow: #000000 -> 0, 0, 0 */
+  --shadow: 0, 0, 0;
+  /* Scrim: #000000 -> 0, 0, 0 */
+  --scrim: 0, 0, 0;
+
+  /* Inverse-Surface: #2f3033 -> 47, 48, 51 */
+  --inverse-surface: 47, 48, 51;
+  /* Inverse-On-Surface: #f1f0f4 -> 241, 240, 244 */
+  --inverse-on-surface: 241, 240, 244;
+  /* Inverse-Primary: #9ecaff -> 158, 202, 255 */
+  --inverse-primary: 158, 202, 255;
+
+  /* Surface-Dim: #dadadd -> 218, 218, 221 */
+  --surface-dim: 218, 218, 221;
+  /* Surface-Bright: #faf9fc -> 250, 249, 252 */
+  --surface-bright: 250, 249, 252;
+  /* Surface-Container-Lowest: #ffffff -> 255, 255, 255 */
+  --surface-container-lowest: 255, 255, 255;
+  /* Surface-Container-Low: #f4f3f7 -> 244, 243, 247 */
+  --surface-container-low: 244, 243, 247;
+  /* Surface-Container: #eeedf1 -> 238, 237, 241 */
+  --surface-container: 238, 237, 241;
+  /* Surface-Container-High: #e8e8eb -> 232, 232, 235 */
+  --surface-container-high: 232, 232, 235;
+  /* Surface-Container-Highest: #e2e2e6 -> 226, 226, 230 */
+  --surface-container-highest: 226, 226, 230;
 }

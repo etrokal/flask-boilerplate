@@ -1,0 +1,19 @@
+{% extends "layouts/base.jinja" %}
+{% from "form/_input.jinja" import form_input %}
+
+{% block content %}
+  <main class="responsive padding">
+    <div class="absolute center margin top-margin large-margin">
+      <article class="padding medium-width">
+        <h4>{{ __('Login') }}</h4>
+
+        <form action="" method="post">
+          {{ form.csrf_token }}
+          {{ form_input(form.username) }}
+          {{ form_input(form.password) }}
+          <input type="submit" value="{{ __('Log in') }}" class="button primary small-round">
+        </form>
+      </article>
+    </div>
+  </main>
+{% endblock content %}

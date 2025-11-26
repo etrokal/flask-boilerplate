@@ -6,9 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="google" content="notranslate" />
     <title>Your Page Title</title>
+
     <link
       href="{{ url_for('static', filename='css/beer.min.css') }}"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
     />
     <script
       type="module"
@@ -19,20 +24,11 @@
       src="{{ url_for('static', filename='js/material-dynamic-colors.min.js') }}"
     ></script>
   </head>
-  <body class="dark">
+  <body class="">
     <!-- Your content goes here, e.g., -->
-    {% block nav %}
-      <nav-main>
-        <a slot="leading" icon="menu" c="on-primary-container"></a>
-        <span slot="headline">My App</span>
-      </nav-main>
-    {% endblock nav %}
-    <main>
-      {% block flash %}
-      {% endblock flash %}
-      {% block content %}
-        <h1>Hello, BeerCSS!</h1>
-      {% endblock content %}
-    </main>
+    {% include "partials/_nav.jinja" %}
+    {% include "partials/_flash.jinja" %}
+    {% block content %}
+    {% endblock content %}
   </body>
 </html>

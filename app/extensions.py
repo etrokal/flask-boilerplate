@@ -1,36 +1,65 @@
 
 
-from typing import Any, Callable
-from flask import current_app
+from typing import Any, Callable, override
+from flask import current_app, has_app_context
 from werkzeug.local import LocalProxy
 from .language import Language
 
 
-def _get_language_object() -> Language:
-    if 'language' not in current_app.extensions:
-        from .language import Language
-        current_app.extensions['language'] = Language()
-
-    return current_app.extensions['language']
-
-
-language: LocalProxy[Language] = LocalProxy(_get_language_object)
+def _get_language() -> Language:
+    try:
+        return current_app.extensions['language']
+    except (AttributeError, RuntimeError, KeyError):
+        raise RuntimeError("Language extension not initialized")
 
 
-def _get_message_shortcut() -> Callable[..., str]:
-    def __(msg: str) -> str:
-        if 'language' not in current_app.extensions:
-            raise ValueError(
-                "Language extension must be loaded before using the shortcut")
-
-        language = current_app.extensions['language']
-        assert type(language) is Language
-        return language.get_message(msg)
-
-    if '__' not in current_app.extensions:
-        current_app.extensions['__'] = __
-
-    return current_app.extensions['__']
+language: LocalProxy[Language] = LocalProxy(_get_language)
 
 
-__: LocalProxy[Callable[..., str]] = LocalProxy(_get_message_shortcut)
+class LazyString():
+    """
+    Class to translate strings lazily. 
+    The translated message is only checked when converting to string, instead of on intantiation
+    """
+
+    def __init__(self, msg: str):
+        self.msg = msg
+
+    def __str__(self) -> str:
+        if not has_app_context():
+            return self.msg
+
+        try:
+            language = current_app.extensions['language']
+            return language.get_message(self.msg)
+        except Exception:
+            return self.msg
+
+    def __json__(self, app=None) -> str:
+        """
+        Custom method for JSON serialization (used by Flask's JSONProvider).
+        Returns the object's string representation.
+        """
+        return str(self)
+
+    def __html__(self) -> str:
+        """
+        Returns the full translated string for rendering.
+        """
+        return str(self)
+
+    def __repr__(self):
+        return f"<LazyString '{self.msg}'>"
+
+    def __mod__(self, other):
+        return str(self) % other
+
+    def __add__(self, other):
+        return str(self) + str(other)
+
+
+def _translate(msg: str) -> LazyString:
+    return LazyString(msg)
+
+
+__ = LocalProxy(lambda: _translate)

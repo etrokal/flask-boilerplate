@@ -23,6 +23,7 @@ Pygments==2.19.2
 pyproject_hooks==1.2.0
 pytest==9.0.1
 python-decouple==3.8
+PyYAML==6.0.3
 setuptools==80.9.0
 SQLAlchemy==2.0.44
 typing_extensions==4.15.0

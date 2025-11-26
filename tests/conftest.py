@@ -1,9 +1,13 @@
 import os
 import tempfile
 
+from flask_sqlalchemy import SQLAlchemy
 import pytest
 
-from app import create_app
+from app import create_app, db
+from flask_migrate import upgrade, downgrade
+
+from app.language.language_manager import Language
 
 
 # with open(os.path.join(os.path.dirname(__file__), 'data.sql'), 'rb') as f:
@@ -16,15 +20,22 @@ def app():
 
     app = create_app({
         "TESTING": True,
-        "SQLALCHEMY_DATABASE_URI": "postgresql+psycopg2://postgres:postgres@localhost:5432/flask_test"
+        "SQLALCHEMY_DATABASE_URI": "postgresql+psycopg2://postgres:postgres@localhost:5432/flask_test",
+        "SECRET_KEY": "asdfghdgjkhjlkgjhfdsaAFGHJKLL6Y5TEWRSF",
+        "LOCALE": "en_us",
+        "DEFAULT_LOCALE": "en_us"
+
     })
 
     with app.app_context():
         # Insert database code
-        
-        pass
+        upgrade()
+        seed_test_db(db)
 
     yield app
+
+    with app.app_context():
+        downgrade()
 
     os.close(db_fd)
     os.unlink(db_path)
@@ -57,5 +68,14 @@ class AuthActions(object):
 
 
 @pytest.fixture
+def language():
+    return Language("en_us", "en_us")
+
+
+@pytest.fixture
 def auth(client):
     return AuthActions(client)
+
+
+def seed_test_db(db: SQLAlchemy):
+    pass

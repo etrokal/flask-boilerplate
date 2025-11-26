@@ -1,0 +1,18 @@
+messages:
+  hello_world: Olá, mundo!
+  auth_register_title: Registrar usuário
+  Username: Nome de usuário
+  Password: Senha
+  'Password Confirmation': Confirmação de senha
+  'This value already exists': Esse valor já existe
+  Register: Registrar
+  'Register user': Registrar usuário
+  'This user already exists': Esse usuário já existe
+  'This e-mail already exists': Esse e-mail já existe
+  'Must be equal to password confirmation': Deve ser igual à confirmação de senha
+  'Log in': Autenticar
+  "Wrong username or password": Nome de usuário ou senha incorretos
+  'Login successful!': Login realizado com sucesso!
+
+currency: R$
+date_format: "%M/%d/%Y"

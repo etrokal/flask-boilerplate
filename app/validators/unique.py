@@ -1,15 +1,18 @@
 from wtforms import ValidationError
 
+from app.extensions import __
+
 
 class Unique(object):
     """Validator that checks field uniqueness in the database"""
 
-    def __init__(self,  model, field, message: str | None = None,):
+    def __init__(self,  model, field, message: str | None = None,) -> None:
         self.model = model
         self.field = field
         if not message:
-            message = u'This value already exists'
+            message = __('This value already exists')
         self.message = message
+        
 
     def __call__(self, form, field):
         existing = self.model.query.filter(
@@ -22,4 +25,5 @@ class Unique(object):
             record_id = None
 
         if existing and (record_id is None or record_id != existing.id):
+            assert self.message is not None
             raise ValidationError(self.message)

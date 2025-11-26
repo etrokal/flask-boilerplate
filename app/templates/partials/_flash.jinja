@@ -1,0 +1,26 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      {% if category == 'error'%}
+        <div class="snackbar top error" id="snackbar">
+      {% elif category == 'success' %}
+        <div class="snackbar primary top" id="snackbar">
+      {% else %}
+        <div class="snackbar top" id="snackbar">
+      {% endif %}
+        <span>{{ message }}</span>
+      </div>
+    {% endfor %}
+    <script>
+      /* elements = document.querySelectorAll("div.snackbar")
+      for(e of elements) {
+        e.showPopover()
+        setTimeout(() => e.hidePopover(), 4000)
+      } */
+      document.addEventListener('DOMContentLoaded', function() {
+        ui("div.snackbar")
+      })
+    </script>
+  {% endif %}
+{% endwith %}
+

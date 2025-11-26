@@ -1,0 +1,21 @@
+{% macro form_input(field) %}
+  <div class="field label border {{ 'invalid' if field.errors else '' }}">
+    {{ field }} {{ field.label }}
+    {% if field.errors %}
+      <span class="error">{{ field.errors | first }}</span>
+    {% endif %}
+  </div>
+{% endmacro %}
+
+
+{% macro form_input_confirmation(field, confirmation_field) %}
+  <div class="field label border {{ 'invalid' if field.errors else '' }}">
+    {{ field }} {{ field.label }}
+    {% if field.errors %}
+      <span class="error">{{ field.errors | first }}</span>
+    {% endif %}
+  </div>
+  <div class="field label border {{ 'invalid' if field.errors else '' }}">
+    {{ confirmation_field }} {{ confirmation_field.label }}
+  </div>
+{% endmacro %}

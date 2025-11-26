@@ -1,0 +1,6 @@
+messages:
+  hello_world: Hello, world!
+  auth_register_title: Register user
+
+currency: US$
+date_format: "%M/%d/%Y"

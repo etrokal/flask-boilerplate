@@ -2,6 +2,10 @@ import json
 from pathlib import Path
 from typing import Any, Dict
 from decouple import config
+from flask import current_app, has_app_context
+import yaml
+
+# TODO: add a getter for a currency number format
 
 
 class Language:
@@ -10,11 +14,16 @@ class Language:
     default_locale: str
     locale: str
 
-    def __init__(self) -> None:
-        self.default_locale = self._get_config_default_locale()
-        self.locale = self.default_locale
+    def __init__(self, default_locale, locale) -> None:
+        self.default_locale = default_locale
+        self.locale = locale
 
         self._load_languages()
+
+    def _get_config_locale(self) -> str:
+        """pega o locale da config"""
+        locale = config("LOCALE", default="en_us")
+        return str(locale) if locale is not None else "en_us"
 
     def _get_config_default_locale(self) -> str:
         """pega o locale padrão da config"""
@@ -22,16 +31,17 @@ class Language:
         return str(default) if default is not None else "en_us"
 
     def _load_languages(self):
-        """Carrega todos os arquivos language/*.json"""
+        """Carrega todos os arquivos language/*.yml"""
         self.languages = {}
         language_dir = Path(__file__).resolve().parent
         if not language_dir.is_dir():
             raise FileNotFoundError(f"Directory {language_dir} not found.")
 
-        for file_path in language_dir.glob("*.json"):
+        for file_path in language_dir.glob("*.yml"):
             lang_code = file_path.stem
             with file_path.open("r", encoding="utf-8") as f:
-                self.languages[lang_code] = json.load(f)
+                # self.languages[lang_code] = json.load(f)
+                self.languages[lang_code] = yaml.safe_load(f)
 
     def set_locale(self, language_code: str) -> None:
         """
@@ -58,7 +68,7 @@ class Language:
 
     def get_currency_symbol(self):
         if self.locale == self.default_locale:
-            return 'US$' #FIXME: Should be a config value
+            return 'US$'  # FIXME: Should be a config value
 
         if 'currency' not in self.languages[self.locale]:
             raise ValueError(
