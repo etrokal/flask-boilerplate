@@ -1,0 +1,23 @@
+{% extends "layouts/mail.jinja" %}
+
+{% block content %}
+  <article>
+    <p>Dear {{ username }},</p>
+    <p>Welcome to {{ app_name }}</p>
+    <p>
+      Thank you for signing up. To ensure your account safety and complete your
+      registration, we need to confirm this e-mail address actually belongs to
+      you.
+    </p>
+    <p>Please, click the button bellow to confirm your e-mail:</p>
+    <a href="{{ link }}" class="button">Confirm my e-mail address</a>
+    <p>Or, if you prefer, access this link directly:</p>
+    <a href="{{ link }}" class="button">{{ link }}</a>
+    <p>This link will expire in {{ max_age // 60 }} minutes, for safety reasons.</p>
+    <p>If you didn't made this registration, please, ignore this e-mail. No account 
+    will be activated and the data will be automatically discarded.</p>
+    
+    <a href="{{ site_address }}">{{ site_address }}</a>
+    <a href="mailto:{{ support_mail }}">{{ support_mail }}</a>
+  </article>
+{% endblock content %}

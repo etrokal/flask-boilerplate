@@ -2,7 +2,7 @@ from typing import override
 from flask import g
 from flask_login import UserMixin
 from .base import BaseModel
-from .. import db
+from .db import db
 
 
 class User(BaseModel, UserMixin):
@@ -24,6 +24,5 @@ class User(BaseModel, UserMixin):
     def is_anonymous(self):
         return False
 
-    @property
     def get_id(self):
-        return self.username
+        return str(self.username)

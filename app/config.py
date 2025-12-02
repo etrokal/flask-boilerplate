@@ -21,6 +21,8 @@ class Config:
         "DEBUG", default=False, cast=bool)
     LOCALE = config("LOCALE", default="en_us")
     DEFAULT_LOCALE = config("DEFAULT_LOCALE", default="en_us")
+    SIGNED_LINKS_MAX_AGE = config(
+        "SIGNED_LINKS_MAX_AGE", default="1200", cast=int)
 
 
 class DevelopmentConfig(Config):

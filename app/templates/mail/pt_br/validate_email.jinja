@@ -1,0 +1,27 @@
+{% extends "layouts/mail.jinja" %}
+
+{% block content %}
+  <article>
+    <p>Presado {{ username }},</p>
+    <p>Bem vindo ao sistema {{ app_name }}</p>
+    <p>
+      Obrigado por se registrar. Para garantir a segurança da sua conta e
+      completar seu cadastro, precisamos confirmar que este endereço de e-mail
+      pertence mesmo a você.
+    </p>
+    <p>Por favor, clique no botão abaixo para confirmar seu e-mail:</p>
+    <a href="{{ link }}" class="button">Confirmar meu endereço de e-mail</a>
+    <p>Ou, se você preferir, acesse este link diretamente:</p>
+    <a href="{{ link }}">{{ link }}</a>
+    <p>
+      O link vai expirar em {{ max_age // 60 }} minutos, por motivo de
+      segurança.
+    </p>
+    <p>
+      Se você não fez esse cadastro, por favor, ignore este e-mail. Nenhuma
+      conta será ativada e os dados serão descartados automaticamente.
+    </p>
+    <a href="{{ site_address }}">{{ site_address }}</a>
+    <a href="mailto:{{ support_mail }}">{{ support_mail }}</a>
+  </article>
+{% endblock content %}
