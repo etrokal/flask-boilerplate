@@ -23,6 +23,13 @@ class Config:
     DEFAULT_LOCALE = config("DEFAULT_LOCALE", default="en_us")
     SIGNED_LINKS_MAX_AGE = config(
         "SIGNED_LINKS_MAX_AGE", default="1200", cast=int)
+    MAIL_SERVER = config("MAIL_SERVER")
+    MAIL_PORT = config("MAIL_SMTP_PORT", default=587, cast=int)
+    MAIL_USE_TLS = config("MAIL_USE_TLS", default=False, cast=bool)
+    MAIL_USE_SSL = config("MAIL_USE_SSL", default=False, cast=bool)
+    MAIL_USERNAME = config("MAIL_USERNAME")
+    MAIL_PASSWORD = config("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = config("MAIL_DEFAULT_SENDER", default="Flask App")
 
 
 class DevelopmentConfig(Config):

@@ -77,7 +77,7 @@ def test_should_register_valid_data(app: Flask, username, email, password, passw
     assert CalledStatus.STATUS  # mail was sent
 
 
-def test_login(auth: AuthActions, client) -> None:
+def test_login(auth: AuthActions, client: FlaskClient) -> None:
     with client:
         response = auth.login()
         assert response.status_code == 302
@@ -86,14 +86,23 @@ def test_login(auth: AuthActions, client) -> None:
         assert user_id == "test1"
 
 
-def test_register_success_page(client):
+def test_register_success_page(client: FlaskClient) -> None:
     response = client.get('/auth/register_success')
     assert response.status_code == 200
 
 
-def test_signing_and_validating_token(app: Flask, client: FlaskClient):
+def test_signing_and_validating_token(app: Flask, client: FlaskClient) -> None:
     email = 'email@email.com'
     with app.app_context():
         token = routes.generate_verification_token(email)
         result_email = routes.validate_token(token)
         assert email == result_email
+
+
+def test_send_confirmation_mail(app) -> None:
+    with app.app_context():
+        db = get_session()
+        user = db.scalars(select(User).where(User.username == 'test1')).first()
+        assert user is not None
+
+        routes.send_confirmation_mail(user)

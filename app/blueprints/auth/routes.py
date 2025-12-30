@@ -1,15 +1,19 @@
 from datetime import datetime, timedelta, timezone
+from re import A
 from typing import Dict
 from decouple import config
 from flask import Blueprint, Response, abort, current_app, redirect, render_template, request, template_rendered, url_for, flash
 from flask_mail import Message
+from flask_migrate import current
 import jwt
 
 from sqlalchemy.orm.session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from werkzeug.wrappers.response import Response
 
+from app import language
 from app.blueprints.auth.form import LoginForm, RegisterForm
+from app.language.language_manager import Language
 from app.lib import mail
 from app.models.db import get_session
 from app.models.user import User
@@ -119,11 +123,13 @@ def verify_user_email(token: str):
 
 
 def send_confirmation_mail(user: User):
-    msg: Message = create_mail_message(user)
+    language = current_app.extensions['language']
+    assert type(language) is Language
+    msg: Message = create_mail_message(user, language.locale)
     mail.send(msg)
 
 
-def create_mail_message(user: User) -> Message:
+def create_mail_message(user: User, locale: str) -> Message:
     email = user.email
     username = user.username
     link = url_for('auth.verify_user_email',
@@ -132,13 +138,16 @@ def create_mail_message(user: User) -> Message:
         current_app.config.get('MAIL_DEFAULT_SENDER', ""),
         current_app.config.get('MAIL_USERNAME', "")
     )
+
     msg = Message(
-        subject=__('Mail confirmation'),
+        subject=str(__('Mail confirmation')),
         sender=sender,
         recipients=[email]
     )
-    msg.body = render_template(
-        'mail/mail_confirmation.jinja', username=username, link=link)
+
+    max_age = int(current_app.config.get('SIGNED_LINKS_MAX_AGE', '1200'))
+    msg.html = render_template(
+        f'mail/{locale}/validate_email.jinja', username=username, link=link, max_age=max_age)
 
     return msg
 

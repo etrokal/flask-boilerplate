@@ -58,8 +58,6 @@ def client(app: Flask) -> FlaskClient:
 def runner(app: Flask) -> FlaskCliRunner:
     return app.test_cli_runner()
 
-# TODO: alter to use my authentication
-
 
 class AuthActions(object):
     def __init__(self, client):
@@ -86,7 +84,7 @@ def auth(client):
 
 
 def seed_test_db(db: SQLAlchemy):
-    user = User(username='test1', email='mail1@example.com',  # type: ignore
-                password=generate_password_hash('password'), active=True) # type: ignore
+    user = User(username='test1', email='mail1@example.com',
+                password=generate_password_hash('password'), active=True)
     db.session.add(instance=user)
     db.session.commit()
